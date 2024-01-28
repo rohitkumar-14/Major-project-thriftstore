@@ -1,0 +1,19 @@
+{% extends "master.html" %}
+{% block title %}Home{% endblock title %}
+{% load static %}
+{% block content %}
+
+<div class="container-coll">
+<h2>{{ category }} Collection</h2>
+
+{% for product in products %}
+<div class="product-cards">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    <p>{{ product.name }}</p>
+    <p>Price: ${{ product.price }}</p>
+    <button class="add-to-carts-btn">Add to Cart</button>
+</div>
+{% endfor %}
+
+</div>
+{% endblock content %}

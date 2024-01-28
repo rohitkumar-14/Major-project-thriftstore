@@ -1,0 +1,255 @@
+{% extends "master.html" %}
+{% block title %}Home{% endblock title %}
+{% load static %}
+{% block content %}
+<header class="hero-section">
+    <div class="content">
+      
+        <h1 class="sub-heading">
+          "Embrace the art of thrift, where every item tells a story, </h1>
+          <h1 class="sub-heading">and every purchase creates a new chapter in the journey of sustainable living."</h1>
+          <p class="sub-heading">best fashion collection of all time</p>
+     
+     
+      
+    </div>
+  </header>
+{% endblock content %}
+{% block body %}
+<section class="product">
+    <h2 class="product-category">best selling</h2>
+    <div class="product-container">
+        {% for product in products %}
+      <div class="product-card">
+        <div class="product-image">
+          <img src="{{ product.image.url }}" class="product-thumb" alt="{{ product.name }} Image" />
+          <form method="post" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button class="card-btn" type="submit">Add to Cart</button>
+        </form>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name"><a class="product-name" href="{% url 'product_detail' product.id %}">{{ product.name }}</a></h3>
+          <p class="product-short-des">{{ product.description }}</p>
+          <div class="wishlist-icon">
+            <div>
+              <span class="price">{{ product.price }}</span><span class="actual-price">{{ product.actual_price }}</span>
+            </div>
+            <h6>
+              <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+                {% csrf_token %}
+                <button class="wishlistbtn" type="submit">W</button>
+            </form>
+            </h6>
+          </div>
+          
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+<section class="collection-container">
+    <a href="{% url 'collection' category='womens' %}" class="collection">
+        <img src="{% static 'images/women-collection.png' %}" alt="">
+        <p class="collection-title">women<br> apparels</p>
+    </a>
+    <a href="{% url 'mens' %}" class="collection">
+        <img src="{% static 'images/men-collection.png' %}" alt="">
+        <p class="collection-title">men<br> apparels</p>
+    </a>
+    <a href="{% url 'collection' category='accessories' %}" class="collection">
+        <img src="{% static 'images/accessories-collection.png' %}" alt="">
+        <p class="collection-title">accessories</p>
+    </a>
+</section>
+<button class="chatbot-toggler">
+  <span class="material-symbols-rounded"><b>Help</b></span>
+  <span class="material-symbols-outlined">close</span>
+</button>
+<div class="chatbot">
+  <header>
+    <h2>Chatbot</h2>
+    <span class="close-btn material-symbols-outlined">close</span>
+  </header>
+  <ul class="chatbox">
+    <li class="chat incoming">
+      <span class="material-symbols-outlined">Bot</span>
+      <p>Hi there 👋<br>How can I help you today?</p>
+    </li>
+  </ul>
+  <div class="chat-input">
+    <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+    <span id="send-btn" class="material-symbols-rounded">send</span>
+  </div>
+</div>
+<script>
+  const chatbotToggler = document.querySelector(".chatbot-toggler");
+const closeBtn = document.querySelector(".close-btn");
+const chatbox = document.querySelector(".chatbox");
+const chatInput = document.querySelector(".chat-input textarea");
+const sendChatBtn = document.querySelector(".chat-input span");
+
+
+const inputInitHeight = chatInput.scrollHeight;
+
+const createChatLi = (message, className) => {
+    // Create a chat <li> element with passed message and className
+    const chatLi = document.createElement("li");
+    chatLi.classList.add("chat", `${className}`);
+    let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+    chatLi.innerHTML = chatContent;
+    chatLi.querySelector("p").textContent = message;
+    return chatLi; // return chat <li> element
+}
+let userMessage = [
+  ["hi", "hey", "hello"],
+  ["sure", "yes", "no"],
+  ["how to sell our products"],
+  ["Where can i see my order details"],
+  ["are you genious", "are you nerd", "are you intelligent"],
+  ["i hate you", "i dont like you"],
+  ["how are you", "how is life", "how are things", "how are you doing"],
+  ["how is corona", "how is covid 19", "how is covid19 situation"],
+  ["what are you doing", "what is going on", "what is up"],
+  ["how old are you"],
+  ["who are you", "are you human", "are you bot", "are you human or bot"],
+  ["who created you", "who made you", "who is your creator"],
+
+  [
+    "your name please",
+    "your name",
+    "may i know your name",
+    "what is your name",
+    "what call yourself"
+  ],
+  ["i love you"],
+  ["happy", "good", "fun", "wonderful", "fantastic", "cool", "very good"],
+  ["bad", "bored", "tired"],
+  ["help me", "tell me story", "tell me joke"],
+  ["ah", "ok", "okay", "nice", "welcome"],
+  ["thanks", "thank you"],
+  ["what should i eat today"],
+  ["bro"],
+  ["what", "why", "how", "where", "when"],
+  ["corona", "covid19", "coronavirus"],
+  ["you are funny"],
+  ["i dont know"],
+  ["boring"],
+  ["im tired"]
+];
+let botReply = [
+  ["Hello!", "Hi!", "Hey!", "Hi there!"],
+  ["Okay"],
+  ["To sell your products login to website and then click sell with us button "],
+  ["Check your profile page"],
+  ["Yes I am! "],
+  
+  ["I'm sorry about that. But I like you dude."],
+  [
+    "Fine... how are you?",
+    "Pretty well, how are you?",
+    "Fantastic, how are you?"
+  ],
+  ["Getting better. There?", "Somewhat okay!", "Yeah fine. Better stay home!"],
+
+  [
+    "Nothing much",
+    "About to go to sleep",
+    "Can you guess?",
+    "I don't know actually"
+  ],
+  ["I am always young."],
+  ["I am just a bot", "I am a bot. What are you?"],
+  ["Sabitha Kuppusamy"],
+  ["I am nameless", "I don't have a name"],
+  ["I love you too", "Me too"],
+  ["Have you ever felt bad?", "Glad to hear it"],
+  ["Why?", "Why? You shouldn't!", "Try watching TV", "Chat with me."],
+  ["What about?", "Once upon a time..."],
+  ["Tell me a story", "Tell me a joke", "Tell me about yourself"],
+  ["You're welcome"],
+  ["Briyani", "Burger", "Sushi", "Pizza"],
+  ["Dude!"],
+  ["Yes?"],
+  ["Please stay home"],
+  ["Glad to hear it"],
+  ["Say something interesting"],
+  ["Sorry for that. Let's chat!"],
+  ["Take some rest, Dude!"]
+];
+
+let alternative = [
+  "Same here, dude.",
+  "That's cool! Go on...",
+  "Dude...",
+  "Ask something else...",
+  "Hey, I'm listening..."
+];
+
+const handleChat = () => {
+  const userInput = chatInput.value.trim().toLowerCase(); // Get user entered message and remove extra whitespace
+
+  // Check if user input is not empty
+  if (!userInput) return;
+
+  // Clear the input textarea and set its height to default
+  chatInput.value = "";
+  chatInput.style.height = `${inputInitHeight}px`;
+
+  // Append the user's message to the chatbox
+  chatbox.appendChild(createChatLi(userInput, "outgoing"));
+  chatbox.scrollTo(0, chatbox.scrollHeight);
+
+  setTimeout(() => {
+      // Display "Thinking..." message while waiting for the response
+      const incomingChatLi = createChatLi("Thinking...", "incoming");
+      chatbox.appendChild(incomingChatLi);
+      chatbox.scrollTo(0, chatbox.scrollHeight);
+      generateResponse(userInput, incomingChatLi);
+  }, 600);
+}
+const generateResponse = (userInput, chatElement) => {
+  const messageElement = chatElement.querySelector("p");
+
+  // Check if there is a match in the userMessage
+  const matchIndex = userMessage.findIndex(group =>
+      group.some(msg => userInput.includes(msg))
+  );
+
+  // Set the response based on the match or use an alternative response
+  const response =
+      matchIndex !== -1
+          ? botReply[matchIndex][Math.floor(Math.random() * botReply[matchIndex].length)]
+          : alternative[Math.floor(Math.random() * alternative.length)];
+
+  // Set the response as paragraph text
+  messageElement.textContent = response;
+  chatbox.scrollTo(0, chatbox.scrollHeight);
+};
+
+chatInput.addEventListener("input", () => {
+    // Adjust the height of the input textarea based on its content
+    chatInput.style.height = `${inputInitHeight}px`;
+    chatInput.style.height = `${chatInput.scrollHeight}px`;
+});
+
+chatInput.addEventListener("keydown", (e) => {
+    // If Enter key is pressed without Shift key and the window 
+    // width is greater than 800px, handle the chat
+    if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+        e.preventDefault();
+        handleChat();
+    }
+});
+
+sendChatBtn.addEventListener("click", handleChat);
+closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+</script>
+{% endblock body %}
+
+   
+
+   
+   

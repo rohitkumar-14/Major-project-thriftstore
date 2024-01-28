@@ -1,0 +1,40 @@
+{% extends "master.html" %}
+{% block title %}User Profile{% endblock title %}
+{% load static %}
+{% block content %}
+<section id="main">
+<div class="containeruser">
+    <section class="profile-section">
+      <h1>User Profile</h1>
+      <p>Username: {{ username }}</p>
+      <p>First Name: {{ first_name }}</p>
+      <p>Last Name: {{ last_name }}</p>
+      <p>Email: {{ email }}</p>
+    </section>
+
+    <section class="orders-section">
+      <h2>Your Orders:</h2>
+      {% if user_orders %}
+        <ul class="orders-list">
+          {% for order in user_orders %}
+          <table>
+      <tr class="order-item">
+        <th>Order #{{ order.id }} - Total Price: ${{ order.total_price }} - Created At: {{ order.created_at }}</th>
+        {% for product in order.products.all %}
+        <th class="products-list">{{ product.name }} - ${{ product.price }}t</th>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>No orders yet.</p>
+  {% endif %}     
+          
+        
+      
+    </section>
+    
+  </div>
+</section>
+{% endblock content %}
+{% block body %}{% endblock body %}

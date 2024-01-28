@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+    <title>Thrift | {% block title %}{% endblock title %}</title>
+  </head>
+  <body>
+    <div class="nav">
+      <a href="{% url 'home' %}"><img src="{% static 'images/LOGO.jpg' %}" class="brand-logo" alt=""></a>
+      
+      <div class="nav-items">
+          <li class="nav-items"><a href="{% url 'about' %}" class="link">About</a></li>
+          <li class="nav-items"><a href="{% url 'login' %}" class="link">Login</a></li>
+          {% if user.is_authenticated %}
+          <li class="nav-items"><a href="{% url 'sell_with_us' %}" class="link">SellwithUs</a></li>
+          {% else %}
+          <li class="nav-items"><a href="{% url 'login' %}" class="link">SellwithUs</a></li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li class="nav-items"><a href="{% url 'cart' %}" class="link">Cart</a></li>
+          <li class="nav-items"><a href="{% url 'wishlist' %}" class="link">Wishlist</a></li>
+  <li class="nav-items"><a href="{% url 'logout' %}" class="link">Logout</a></li>
+  <li class="nav-items">Welcome, {{ user.username }}!</li>
+{% endif %}
+      </div>
+    </div>
+    <ul class="links-container">
+      <li class="link-item"><a href="{% url 'home' %}" class="link">home</a></li>
+      <li class="link-item"><a href="{% url 'womens' %}" class="link">women</a></li>
+      <li class="link-item"><a href="{% url 'mens' %}" class="link">men</a></li>
+      <li class="link-item"><a href="{% url 'accessories' %}" class="link">accessories</a></li>
+      {% if user.is_authenticated %}
+      <li class="link-item"><a href="{% url 'sell_with_us' %}" class="link">SellwithUs</a></li>
+      <li class="link-item"><a href="{% url 'profile' %}" class="link">Profile</a></li>
+      {% endif %}
+    </ul>
+    {% block content %} {% endblock content %}
+     {% block body %} {% endblock body%}
+     <footer>
+    <div class="footer-content">
+      <img src="{% static 'images/LOGO.jpg' %}" class="logo" alt="" />
+      <div class="footer-ul-container">
+        <ul class="category">
+          <li class="category-title">men</li>
+          <li><a href="#" class="footer-link">t-shirts</a></li>
+          <li><a href="#" class="footer-link">sweatshirts</a></li>
+          <li><a href="#" class="footer-link">shirts</a></li>
+          <li><a href="#" class="footer-link">jeans</a></li>
+          <li><a href="#" class="footer-link">trousers</a></li>
+          <li><a href="#" class="footer-link">shoes</a></li>
+          <li><a href="#" class="footer-link">casuals</a></li>
+          <li><a href="#" class="footer-link">formals</a></li>
+          <li><a href="#" class="footer-link">sports</a></li>
+          <li><a href="#" class="footer-link">watch</a></li>
+        </ul>
+        <ul class="category">
+          <li class="category-title">women</li>
+          <li><a href="#" class="footer-link">t-shirts</a></li>
+          <li><a href="#" class="footer-link">sweatshirts</a></li>
+          <li><a href="#" class="footer-link">shirts</a></li>
+          <li><a href="#" class="footer-link">jeans</a></li>
+          <li><a href="#" class="footer-link">trousers</a></li>
+          <li><a href="#" class="footer-link">shoes</a></li>
+          <li><a href="#" class="footer-link">casuals</a></li>
+          <li><a href="#" class="footer-link">formals</a></li>
+          <li><a href="#" class="footer-link">sports</a></li>
+          <li><a href="#" class="footer-link">watch</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-title">about company</p>
+    <p class="info">
+      support emails - help@thriftstore.com, customersupport@thriftstore.com
+    </p>
+    <p class="info">telephone - 180 00 00 001, 180 00 00 002</p>
+    <div class="footer-social-container">
+      <div>
+        <a href="#" class="social-link">terms & services</a>
+        <a href="#" class="social-link">privacy page</a>
+      </div>
+      <div>
+        <a href="#" class="social-link">instagram</a>
+        <a href="#" class="social-link">facebook</a>
+        <a href="#" class="social-link">twitter</a>
+      </div>
+    </div>
+    <p class="footer-credit">Clothing, Best apparels online store</p>
+  </div>
+</footer>
+  </body>
+</html>

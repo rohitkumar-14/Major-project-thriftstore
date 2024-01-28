@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+{% block title %}{{ product.name }} - Product Detail{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container-pro">
+    <h1>Thrift Store</h1>
+
+    <div class="product-details">
+      <h1>{{ product.name }}</h1>
+      <p>{{ product.description }}</p>
+      <p>Price: ${{ product.price }}</p>
+      <p>Seller: {{ product.seller.username }}</p>
+      <!-- Add more details as needed -->
+
+      <img src="{{ product.image.url }}" alt="{{ product.name }} Image">
+
+      <form method="post" action="{% url 'add_to_cart' product.id %}">
+          {% csrf_token %}
+          <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+      </form>
+
+      <!-- Add to Wishlist Form -->
+      <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+          {% csrf_token %}
+          <button type="submit" class="add-to-wishlist-btn">Add to Wishlist</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}
+{% block body %}
+{% endblock body %}

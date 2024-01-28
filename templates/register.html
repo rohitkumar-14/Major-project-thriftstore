@@ -1,0 +1,35 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+{% block content %}
+<div class="container-signup">
+    <h1>Register</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="first_name">First Name:</label>
+    <input type="text" name="first_name" required>
+    
+    <label for="last_name">Last Name:</label>
+    <input type="text" name="last_name" required>
+    
+    <label for="username">Username:</label>
+    <input type="text" name="username" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" required><br>
+
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" name="confirm_password" required><br>
+
+    <button type="submit-btn">Register</button>
+</form>
+<a href="{% url 'login' %}">Login</a>
+</div>
+
+{% endblock content %}
+{% block body %}
+{% endblock body %}
+

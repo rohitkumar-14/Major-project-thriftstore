@@ -1,0 +1,26 @@
+{% extends "master.html" %}
+{% block title %}Order{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1>Order Confirmation</h1>
+
+    {% if order %}
+        <section class="order-details">
+          <p>Thank you for your order! Order details:</p>
+          <p>Order ID: {{ order.pk }}</p>
+          <p>Total Price: ${{ order.total_price }}</p>
+          <p>Products:</p>
+          <ul>
+              {% for product in order.products.all %}
+                  <li>{{ product.name }} - ${{ product.price }}</li>
+              {% endfor %}
+          </ul>
+        </section>
+    {% else %}
+        <p>No items in the cart.</p>
+    {% endif %}
+  </div>
+{% endblock content %}
+{% block body %}
+{% endblock body %}

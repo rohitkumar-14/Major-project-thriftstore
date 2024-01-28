@@ -1,0 +1,25 @@
+{% extends "master.html" %}
+{% block title %}Wishlist{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1>Your Wishlist</h1>
+
+{% if wishlist_items %}
+    <ul class="wish">
+        {% for item in wishlist_items %}
+            <li class="wish">
+                {{ item.product.name }} - Price: ${{ item.product.price }}
+                <button class="" onclick="window.location.href='{% url 'delete_wishlist_item' item_id=item.id %}'">Delete</button>
+            </li>
+        
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Your wishlist is empty.</p>
+{% endif %}
+</div>
+
+{% endblock content %}
+{% block body %}
+{% endblock body %}
